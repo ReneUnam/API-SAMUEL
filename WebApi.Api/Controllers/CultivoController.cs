@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using WebApi.Implementation;
 using WebApi.Interface;
 using WebApi.Model;
 
@@ -7,58 +8,58 @@ namespace WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class MateriaController : ControllerBase
+    public class CultivoController : ControllerBase
     {
-        private readonly IMateriaService _IMateriaService;
+        private readonly ICultivoService _ICultivoService;
 
-        public MateriaController(IMateriaService materiaService)
+        public CultivoController(ICultivoService cultivoService)
         {
-            _IMateriaService = materiaService;
+            _ICultivoService = cultivoService;
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<MateriaEntities>> GetAll()
+        public ActionResult<IEnumerable<CultivoEntities>> GetAll()
         {
-            var materias = _IMateriaService.GetALL();
-            if (materias == null)
+            var cultivos = _ICultivoService.GetAll();
+            if (cultivos == null)
             {
                 return NotFound();
             }
-            return Ok(materias);
+            return Ok(cultivos);
 
         }
 
         [HttpGet("{id}")]
-        public ActionResult<MateriaEntities> GetByID(int id)
+        public ActionResult<CultivoEntities> GetByID(int id)
         {
-            var materia = _IMateriaService.GetByID(id);
-            if (materia == null) return NotFound();
-            return Ok(materia);
+            var cultivo = _ICultivoService.GetById(id);
+            if (cultivo == null) return NotFound();
+            return Ok(cultivo);
         }
 
         [HttpPost]
-        public ActionResult Add(MateriaEntities materia)
+        public ActionResult Add(CultivoEntities cultivo)
         {
-            _IMateriaService.Add(materia);
+            _ICultivoService.Add(cultivo);
             return Ok();
         }
 
         [HttpPut("{id}")]
-        public ActionResult Update(int id, MateriaEntities materia)
+        public ActionResult Update(int id, CultivoEntities cultivo)
         {
-            var find = _IMateriaService.GetByID(id);
+            var find = _ICultivoService.GetById(id);
             if (find == null) return NotFound();
-            materia.Id = id;
-            _IMateriaService.Update(materia);
+            cultivo.Id = id;
+            _ICultivoService.Update(cultivo);
             return Ok();
         }
 
         [HttpDelete("{id}")]
         public ActionResult Delete(int id)
         {
-            var find = _IMateriaService.GetByID(id);
+            var find = _ICultivoService.GetById(id);
             if (find == null) return NotFound();
-            _IMateriaService.Delete(id);
+            _ICultivoService.Delete(id);
             return Ok();
         }
     }

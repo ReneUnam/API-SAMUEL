@@ -11,5 +11,5 @@ public class CultivoEntities
     public string FertilizanteUsado { get; set; } //Si aplica
     public decimal ValorVenta { get; set; } //Precio estimado por unidad
     public DateTime FechaSiembra { get; set; }
-    public DateTime FechaCompra { get; set; }
+    public DateTime? FechaCosecha { get; set; }
 }
